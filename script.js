@@ -1,4 +1,3 @@
-
 let tasks = JSON.parse(localStorage.getItem('tasks')) || [];
 let currentEditIndex = null; // To keep track of the index of the task being edited
 
@@ -24,7 +23,6 @@ function displayTasks() {
     completedTaskContainer.innerHTML = ''; // Clear completed tasks
 
     tasks.forEach((task, index) => {
-        // Create task element
         const taskElement = document.createElement('div');
         taskElement.className = 'task';
         
@@ -33,13 +31,13 @@ function displayTasks() {
         const priorityClass = task.priority === 'High' ? 'priority-high' : task.priority === 'Medium' ? 'priority-medium' : '';
 
         taskElement.innerHTML = `
-            <span class="${statusClass}">${task.text}</span>
+            <span>${task.text}</span>
+            <br>
             <span class="${priorityClass}"><strong class="bold">Assigned To:</strong> ${task.assignedTo}</span>
             <span class="${priorityClass}"><strong class="bold">Priority:</strong> ${task.priority}</span>
-            <span class="${priorityClass}"><strong class="bold">Status:</strong> ${task.status}</span>
+            <span class="${statusClass}"><strong class="bold">Status:</strong> ${task.status}</span>
         `;
 
-        // Create task buttons
         const editBtn = document.createElement('button');
         editBtn.textContent = 'Edit';
         editBtn.className = 'edit-task';
@@ -76,10 +74,11 @@ function displayTasks() {
             const priorityClass = task.priority === 'High' ? 'priority-high' : task.priority === 'Medium' ? 'priority-medium' : '';
 
             completedTaskElement.innerHTML = `
-                <span class="${statusClass}">${task.text}</span>
+                <span>${task.text}</span>
+                <br>
                 <span class="${priorityClass}"><strong class="bold">Assigned To:</strong> ${task.assignedTo}</span>
                 <span class="${priorityClass}"><strong class="bold">Priority:</strong> ${task.priority}</span>
-                <span class="${priorityClass}"><strong class="bold">Status:</strong> ${task.status}</span>
+                <span class="${statusClass}"><strong class="bold">Status:</strong> ${task.status}</span>
             `;
 
             const markActiveBtn = document.createElement('button');
@@ -103,7 +102,6 @@ function editTask(index) {
     const prioritySelect = document.getElementById('priority-select');
     const statusSelect = document.getElementById('status-select');
 
-    // Fill the input fields with the task's details
     taskInput.value = task.text;
     assigneeSelect.value = task.assignedTo;
     prioritySelect.value = task.priority;

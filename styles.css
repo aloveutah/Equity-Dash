@@ -34,7 +34,7 @@ button {
 }
 
 .status-in-progress {
-    color: green;
+    color: green;  /* Indicate "In Progress" with green text */
 }
 
 .priority-medium {
