@@ -29,7 +29,7 @@ button {
     justify-content: space-between;
 }
 
-.remove-task, .mark-inactive {
+.remove-task, .mark-inactive, .edit-task {
     background-color: red;
     color: white;
     border: none;

@@ -1,9 +1,17 @@
 
 let tasks = JSON.parse(localStorage.getItem('tasks')) || [];
 
-// Function to add a task
-function addTask(taskDetails) {
-    tasks.push(taskDetails);
+let currentEditIndex = null; // To keep track of the index of the task being edited
+
+// Function to add or update a task
+function addOrUpdateTask(taskDetails) {
+    if (currentEditIndex !== null) {
+        tasks[currentEditIndex] = taskDetails; // Update existing task
+        currentEditIndex = null; // Clear the edit index
+    } else {
+        tasks.push(taskDetails); // Add new task
+    }
+
     localStorage.setItem('tasks', JSON.stringify(tasks)); // Save to local storage
     displayTasks();
 }
@@ -17,31 +25,42 @@ function displayTasks() {
     completedTaskContainer.innerHTML = ''; // Clear completed tasks
 
     tasks.forEach((task, index) => {
-        if (task.status !== 'Complete') {
-            const taskElement = document.createElement('div');
-            taskElement.className = 'task';
-            taskElement.innerHTML = `${task.text} (Assigned to: ${task.assignedTo}, Priority: ${task.priority})`;
+        const taskElement = document.createElement('div');
+        taskElement.className = 'task';
+        taskElement.innerHTML = `${task.text} (Assigned to: ${task.assignedTo}, Priority: ${task.priority}, Status: ${task.status})`;
 
-            const completeBtn = document.createElement('button');
-            completeBtn.textContent = 'Complete';
-            completeBtn.onclick = function() {
-                markTaskComplete(index);
-            };
+        const editBtn = document.createElement('button');
+        editBtn.textContent = 'Edit';
+        editBtn.className = 'edit-task';
+        editBtn.onclick = function() {
+            editTask(index);
+        };
 
-            const removeBtn = document.createElement('button');
-            removeBtn.textContent = 'Remove';
-            removeBtn.className = 'remove-task';
-            removeBtn.onclick = function() {
-                removeTask(index);
-            };
+        const completeBtn = document.createElement('button');
+        completeBtn.textContent = 'Complete';
+        completeBtn.onclick = function() {
+            markTaskComplete(index);
+        };
 
-            taskElement.appendChild(completeBtn);
-            taskElement.appendChild(removeBtn);
-            taskContainer.appendChild(taskElement);
-        } else {
+        const removeBtn = document.createElement('button');
+        removeBtn.textContent = 'Remove';
+        removeBtn.className = 'remove-task';
+        removeBtn.onclick = function() {
+            removeTask(index);
+        };
+
+        taskElement.appendChild(editBtn);
+        taskElement.appendChild(completeBtn);
+        taskElement.appendChild(removeBtn);
+        taskContainer.appendChild(taskElement);
+    });
+
+    // Display completed tasks
+    tasks.forEach((task, index) => {
+        if (task.status === 'Complete') {
             const completedTaskElement = document.createElement('div');
             completedTaskElement.className = 'completed-task';
-            completedTaskElement.innerHTML = `${task.text} (Assigned to: ${task.assignedTo}, Priority: ${task.priority})`;
+            completedTaskElement.innerHTML = `${task.text} (Assigned to: ${task.assignedTo}, Priority: ${task.priority}, Status: ${task.status})`;
 
             const markActiveBtn = document.createElement('button');
             markActiveBtn.textContent = 'Move Back to Pending';
@@ -54,6 +73,23 @@ function displayTasks() {
             completedTaskContainer.appendChild(completedTaskElement);
         }
     });
+}
+
+// Function to edit a task
+function editTask(index) {
+    const task = tasks[index];
+    const taskInput = document.getElementById('task-input');
+    const assigneeSelect = document.getElementById('assignee-select');
+    const prioritySelect = document.getElementById('priority-select');
+    const statusSelect = document.getElementById('status-select');
+
+    // Fill the input fields with the task's details
+    taskInput.value = task.text;
+    assigneeSelect.value = task.assignedTo;
+    prioritySelect.value = task.priority;
+    statusSelect.value = task.status;
+
+    currentEditIndex = index; // Keep track of the task being edited
 }
 
 // Function to mark a task as complete
@@ -77,7 +113,7 @@ function removeTask(index) {
     displayTasks();
 }
 
-// Event Listener for Add Task Button
+// Event Listener for Add/Update Task Button
 document.getElementById('add-task-button').addEventListener('click', () => {
     const taskInput = document.getElementById('task-input');
     const taskText = taskInput.value.trim();
@@ -87,7 +123,7 @@ document.getElementById('add-task-button').addEventListener('click', () => {
 
     if (taskText) {
         const taskDetails = { text: taskText, assignedTo, priority, status };
-        addTask(taskDetails);
+        addOrUpdateTask(taskDetails);
         taskInput.value = ''; // Clear input
     }
 });
