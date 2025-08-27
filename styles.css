@@ -29,6 +29,24 @@ button {
     justify-content: space-between;
 }
 
+.bold {
+    font-weight: bold;
+}
+
+.status-in-progress {
+    color: green;
+}
+
+.priority-medium {
+    background-color: yellow;
+    color: black;  /* Black text for visibility */
+}
+
+.priority-high {
+    background-color: red;
+    color: white;  /* White text for visibility */
+}
+
 .remove-task, .mark-inactive, .edit-task {
     background-color: red;
     color: white;
