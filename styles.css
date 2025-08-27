@@ -34,17 +34,17 @@ button {
 }
 
 .status-in-progress {
-    color: green;  /* Indicate "In Progress" with green text */
+    color: green;  /* Status: In Progress will be green text */
 }
 
 .priority-medium {
     background-color: yellow;
-    color: black;  /* Black text for visibility */
+    color: black;  /* Priority: Medium will have a yellow background */
 }
 
 .priority-high {
     background-color: red;
-    color: white;  /* White text for visibility */
+    color: white;  /* Priority: High will have a red background with white text */
 }
 
 .remove-task, .mark-inactive, .edit-task {
