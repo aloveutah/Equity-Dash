@@ -25,39 +25,36 @@ function displayTasks() {
     completedTaskContainer.innerHTML = ''; // Clear completed tasks
 
     tasks.forEach((task, index) => {
-        const taskElement = document.createElement('div');
-        taskElement.className = 'task';
-        taskElement.innerHTML = `${task.text} (Assigned to: ${task.assignedTo}, Priority: ${task.priority}, Status: ${task.status})`;
+        if (task.status !== 'Complete') {
+            const taskElement = document.createElement('div');
+            taskElement.className = 'task';
+            taskElement.innerHTML = `${task.text} (Assigned to: ${task.assignedTo}, Priority: ${task.priority}, Status: ${task.status})`;
 
-        const editBtn = document.createElement('button');
-        editBtn.textContent = 'Edit';
-        editBtn.className = 'edit-task';
-        editBtn.onclick = function() {
-            editTask(index);
-        };
+            const editBtn = document.createElement('button');
+            editBtn.textContent = 'Edit';
+            editBtn.className = 'edit-task';
+            editBtn.onclick = function() {
+                editTask(index);
+            };
 
-        const completeBtn = document.createElement('button');
-        completeBtn.textContent = 'Complete';
-        completeBtn.onclick = function() {
-            markTaskComplete(index);
-        };
+            const completeBtn = document.createElement('button');
+            completeBtn.textContent = 'Complete';
+            completeBtn.onclick = function() {
+                markTaskComplete(index);
+            };
 
-        const removeBtn = document.createElement('button');
-        removeBtn.textContent = 'Remove';
-        removeBtn.className = 'remove-task';
-        removeBtn.onclick = function() {
-            removeTask(index);
-        };
+            const removeBtn = document.createElement('button');
+            removeBtn.textContent = 'Remove';
+            removeBtn.className = 'remove-task';
+            removeBtn.onclick = function() {
+                removeTask(index);
+            };
 
-        taskElement.appendChild(editBtn);
-        taskElement.appendChild(completeBtn);
-        taskElement.appendChild(removeBtn);
-        taskContainer.appendChild(taskElement);
-    });
-
-    // Display completed tasks
-    tasks.forEach((task, index) => {
-        if (task.status === 'Complete') {
+            taskElement.appendChild(editBtn);
+            taskElement.appendChild(completeBtn);
+            taskElement.appendChild(removeBtn);
+            taskContainer.appendChild(taskElement);
+        } else {
             const completedTaskElement = document.createElement('div');
             completedTaskElement.className = 'completed-task';
             completedTaskElement.innerHTML = `${task.text} (Assigned to: ${task.assignedTo}, Priority: ${task.priority}, Status: ${task.status})`;
