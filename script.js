@@ -1,18 +1,3 @@
-let tasks = JSON.parse(localStorage.getItem('tasks')) || [];
-let currentEditIndex = null; // To keep track of the index of the task being edited
-
-// Function to add or update a task
-function addOrUpdateTask(taskDetails) {
-    if (currentEditIndex !== null) {
-        tasks[currentEditIndex] = taskDetails; // Update existing task
-        currentEditIndex = null; // Clear the edit index
-    } else {
-        tasks.push(taskDetails); // Add new task
-    }
-
-    localStorage.setItem('tasks', JSON.stringify(tasks)); // Save to local storage
-    displayTasks();
-}
 
 // Function to display tasks
 function displayTasks() {
@@ -33,7 +18,7 @@ function displayTasks() {
         taskElement.innerHTML = `
             <span>${task.text}</span>
             <br>
-            <span class="${priorityClass}"><strong class="bold">Assigned To:</strong> ${task.assignedTo}</span>
+            <span><strong class="bold">Assigned To:</strong> ${task.assignedTo}</span>
             <span class="${priorityClass}"><strong class="bold">Priority:</strong> ${task.priority}</span>
             <span class="${statusClass}"><strong class="bold">Status:</strong> ${task.status}</span>
         `;
@@ -76,7 +61,7 @@ function displayTasks() {
             completedTaskElement.innerHTML = `
                 <span>${task.text}</span>
                 <br>
-                <span class="${priorityClass}"><strong class="bold">Assigned To:</strong> ${task.assignedTo}</span>
+                <span><strong class="bold">Assigned To:</strong> ${task.assignedTo}</span>
                 <span class="${priorityClass}"><strong class="bold">Priority:</strong> ${task.priority}</span>
                 <span class="${statusClass}"><strong class="bold">Status:</strong> ${task.status}</span>
             `;
@@ -93,58 +78,3 @@ function displayTasks() {
         }
     });
 }
-
-// Function to edit a task
-function editTask(index) {
-    const task = tasks[index];
-    const taskInput = document.getElementById('task-input');
-    const assigneeSelect = document.getElementById('assignee-select');
-    const prioritySelect = document.getElementById('priority-select');
-    const statusSelect = document.getElementById('status-select');
-
-    taskInput.value = task.text;
-    assigneeSelect.value = task.assignedTo;
-    prioritySelect.value = task.priority;
-    statusSelect.value = task.status;
-
-    currentEditIndex = index; // Keep track of the task being edited
-}
-
-// Function to mark a task as complete
-function markTaskComplete(index) {
-    tasks[index].status = 'Complete';
-    localStorage.setItem('tasks', JSON.stringify(tasks)); // Update local storage
-    displayTasks(); // Refresh task display to update visible tasks
-}
-
-// Function to move a completed task back to pending
-function moveTaskBackToPending(index) {
-    tasks[index].status = 'Not Started'; // Resetting status to not started
-    localStorage.setItem('tasks', JSON.stringify(tasks)); // Update local storage
-    displayTasks(); // Refresh task display to update visible tasks
-}
-
-// Function to remove a task
-function removeTask(index) {
-    tasks.splice(index, 1);
-    localStorage.setItem('tasks', JSON.stringify(tasks)); // Update local storage
-    displayTasks(); // Refresh task display to update visible tasks
-}
-
-// Event Listener for Add/Update Task Button
-document.getElementById('add-task-button').addEventListener('click', () => {
-    const taskInput = document.getElementById('task-input');
-    const taskText = taskInput.value.trim();
-    const assignedTo = document.getElementById('assignee-select').value;
-    const priority = document.getElementById('priority-select').value;
-    const status = document.getElementById('status-select').value;
-
-    if (taskText) {
-        const taskDetails = { text: taskText, assignedTo, priority, status };
-        addOrUpdateTask(taskDetails);
-        taskInput.value = ''; // Clear the input field
-    }
-});
-
-// Initial display of tasks
-displayTasks();
