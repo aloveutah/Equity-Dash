@@ -11,9 +11,37 @@
     <h1>Equity Team Task Dashboard</h1>
     <div>
         <input type="text" id="task-input" placeholder="Enter your task here...">
+        <select id="assignee-select">
+            <option value="All (W/N/D/A)">All (W/N/D/A)</option>
+            <option value="Nicole Thomas">Nicole Thomas</option>
+            <option value="Daniela Torres">Daniela Torres</option>
+            <option value="Amy Love">Amy Love</option>
+            <option value="Shareworks">Shareworks</option>
+            <option value="Altshare">Altshare</option>
+            <option value="Deloitte">Deloitte</option>
+            <option value="Payroll">Payroll</option>
+            <option value="Legal Team">Legal Team</option>
+            <option value="Other">Other</option>
+        </select>
+        <select id="priority-select">
+            <option value="Low">Low</option>
+            <option value="Medium">Medium</option>
+            <option value="High">High</option>
+        </select>
+        <select id="status-select">
+            <option value="Not Started">Not Started</option>
+            <option value="In Progress">In Progress</option>
+            <option value="Complete">Complete</option>
+        </select>
         <button id="add-task-button">Add Task</button>
     </div>
+    
+    <h2>Pending Tasks</h2>
     <div id="task-container"></div>
+
+    <h2>COMPLETED TASKS</h2>
+    <div id="completed-task-container"></div>
+
     <script src="script.js"></script>
 </body>
 </html>

@@ -4,24 +4,24 @@ body {
     margin: 20px;
 }
 
-h1 {
+h1, h2 {
     text-align: center;
 }
 
-input {
+input, select, button {
     padding: 10px;
-    width: 75%;
+    margin: 5px;
 }
 
 button {
-    padding: 10px;
+    cursor: pointer;
 }
 
-#task-container {
+#task-container, #completed-task-container {
     margin-top: 20px;
 }
 
-.task {
+.task, .completed-task {
     padding: 10px;
     border: 1px solid #ccc;
     margin: 5px 0;
@@ -29,7 +29,7 @@ button {
     justify-content: space-between;
 }
 
-.remove-task {
+.remove-task, .mark-inactive {
     background-color: red;
     color: white;
     border: none;
