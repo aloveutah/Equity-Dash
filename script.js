@@ -1,6 +1,5 @@
 
 let tasks = JSON.parse(localStorage.getItem('tasks')) || [];
-
 let currentEditIndex = null; // To keep track of the index of the task being edited
 
 // Function to add or update a task
@@ -24,8 +23,9 @@ function displayTasks() {
     taskContainer.innerHTML = ''; // Clear pending tasks
     completedTaskContainer.innerHTML = ''; // Clear completed tasks
 
+    // Loop through tasks and display them accordingly
     tasks.forEach((task, index) => {
-        if (task.status !== 'Complete') {
+        if (task.status !== 'Complete') { // Only display pending tasks
             const taskElement = document.createElement('div');
             taskElement.className = 'task';
             taskElement.innerHTML = `${task.text} (Assigned to: ${task.assignedTo}, Priority: ${task.priority}, Status: ${task.status})`;
@@ -55,6 +55,7 @@ function displayTasks() {
             taskElement.appendChild(removeBtn);
             taskContainer.appendChild(taskElement);
         } else {
+            // Completed tasks
             const completedTaskElement = document.createElement('div');
             completedTaskElement.className = 'completed-task';
             completedTaskElement.innerHTML = `${task.text} (Assigned to: ${task.assignedTo}, Priority: ${task.priority}, Status: ${task.status})`;
@@ -93,21 +94,21 @@ function editTask(index) {
 function markTaskComplete(index) {
     tasks[index].status = 'Complete';
     localStorage.setItem('tasks', JSON.stringify(tasks)); // Update local storage
-    displayTasks();
+    displayTasks(); // Refresh task display to update visible tasks
 }
 
 // Function to move a completed task back to pending
 function moveTaskBackToPending(index) {
-    tasks[index].status = 'Not Started'; // Resetting status
+    tasks[index].status = 'Not Started'; // Resetting status to not started
     localStorage.setItem('tasks', JSON.stringify(tasks)); // Update local storage
-    displayTasks();
+    displayTasks(); // Refresh task display to update visible tasks
 }
 
 // Function to remove a task
 function removeTask(index) {
     tasks.splice(index, 1);
     localStorage.setItem('tasks', JSON.stringify(tasks)); // Update local storage
-    displayTasks();
+    displayTasks(); // Refresh task display to update visible tasks
 }
 
 // Event Listener for Add/Update Task Button
@@ -121,7 +122,7 @@ document.getElementById('add-task-button').addEventListener('click', () => {
     if (taskText) {
         const taskDetails = { text: taskText, assignedTo, priority, status };
         addOrUpdateTask(taskDetails);
-        taskInput.value = ''; // Clear input
+        taskInput.value = ''; // Clear the input field
     }
 });
 
